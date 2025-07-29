@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from app.api.v1.endpoints import book
 from app.core.db.database import engine, Base
 
 app = FastAPI()
@@ -10,3 +11,5 @@ def on_startup():
 @app.get("/")
 def read_root():
     return {"msg": "API PipeImob rodando!"}
+
+app.include_router(book.router)
