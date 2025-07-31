@@ -1,18 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
-from app.core.db.database import SessionLocal
+from app.core.db.database import get_db
 from app.services import book_service
 from app.api.v1.schemas.book import BookCreate, BookUpdate, BookOut
 from app.core.security import get_current_username
 
 router = APIRouter(prefix="/books", tags=["books"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
 
 @router.get("/", response_model=list[BookOut])
 def list_books(db: Session = Depends(get_db)):

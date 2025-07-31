@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
@@ -20,3 +20,10 @@ print("POSTGRES_USER:", os.getenv("POSTGRES_USER"))
 print("POSTGRES_PASSWORD:", os.getenv("POSTGRES_PASSWORD"))
 print("POSTGRES_DB:", os.getenv("POSTGRES_DB"))
 print("POSTGRES_HOST:", os.getenv("POSTGRES_HOST"))
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
